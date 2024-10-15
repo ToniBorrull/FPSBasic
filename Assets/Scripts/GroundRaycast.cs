@@ -5,15 +5,19 @@ using UnityEngine;
 public class GroundRaycast : MonoBehaviour
 {
     public LayerMask layerMask;
-    public float speed = 10f;
+    
     public float distance;
     public bool grounded;
     public float jumpForce;
+
+    public float speed = 10f;
+    float normalSpeed;
 
     public Rigidbody rb;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        normalSpeed = speed;
     }
 
 
@@ -40,10 +44,41 @@ public class GroundRaycast : MonoBehaviour
     {
         if (grounded)
         {
-            float vertical = Input.GetAxis("Vertical") * Time.deltaTime * speed;
-            float horizontal = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
-            Vector3 dir = (transform.forward * vertical) + (transform.right * horizontal);
+            float vertical = Input.GetAxis("Vertical");
+            
+
+            float horizontal = Input.GetAxis("Horizontal");
+
+            speed = normalSpeed;
+
+            if (vertical > 0)
+            {
+                speed = normalSpeed;
+
+                if (Input.GetButton("Fire3")){
+                    speed = normalSpeed * 2;
+
+                }
+                if (Input.GetButtonUp("Fire3")){
+                    speed = normalSpeed;
+                }
+            }
+
+            if (vertical < 0)
+            {
+                speed = normalSpeed * 0.5f;
+            }
+            if (horizontal != 0 && vertical == 0)
+            {
+                speed = normalSpeed * 0.75f; 
+            }
+
+            float verticalMovement = vertical * Time.deltaTime * speed;
+            float horizontalMovement = horizontal * Time.deltaTime * speed;
+
+            Vector3 dir = (transform.forward * verticalMovement) + (transform.right * horizontalMovement);
             transform.localPosition += dir;
+            
         }
     }
     void Raycast()

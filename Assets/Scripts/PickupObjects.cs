@@ -7,7 +7,11 @@ public class PickupObjects : MonoBehaviour
     public LayerMask layerMask;
     public float speed = 10f;
     public float distance;
+    float actualDistance;
     public bool objectFront;
+    bool objectSelected;
+    
+    
     RaycastHit hit;
     public GameObject selectedObject;
     private Rigidbody selectedRb;
@@ -15,7 +19,7 @@ public class PickupObjects : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        actualDistance = distance;
     }
 
     // Update is called once per frame
@@ -47,19 +51,43 @@ public class PickupObjects : MonoBehaviour
         {
             if (Input.GetButton("Fire1"))
             {
+                objectSelected = true;
                 selectedObject = hit.transform.gameObject;
                 selectedRb = selectedObject.GetComponent<Rigidbody>();
                 
-                selectedRb.useGravity = false;
+                selectedRb.isKinematic = true;
                 selectedObject.transform.position = transform.position + transform.forward * distance;
+
             }
             if (Input.GetButtonUp("Fire1"))
             {
                 
-                selectedRb.useGravity = true;
+                selectedRb.isKinematic = false;
                 selectedObject = null;
-                selectedRb = null;  // Limpiar la referencia al Rigidbody
+                selectedRb = null;
+                objectSelected = false;
             }
+        }
+        if (!objectFront)
+        {
+            if (selectedRb != null)
+            {
+                selectedRb.isKinematic = false;
+                selectedObject = null;
+                selectedRb = null;
+                objectSelected = false;
+            }
+        }
+    }
+    void ChangeObjectDistance()
+    {
+        if (objectSelected)
+        {
+            distance = actualDistance*Input.mouseScrollDelta.y;
+        }
+        else
+        {
+            distance = actualDistance;
         }
     }
 }

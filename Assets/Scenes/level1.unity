@@ -238,10 +238,10 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 64
-  speed: 10
   distance: 0.2
   grounded: 0
   jumpForce: 5
+  speed: 10
   rb: {fileID: 0}
 --- !u!1 &18903225
 GameObject:
@@ -366,7 +366,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   speed: 10
-  distance: 2
+  distance: 5
   objectFront: 0
   selectedObject: {fileID: 0}
 --- !u!1 &573155295
@@ -551,7 +551,7 @@ Transform:
   m_GameObject: {fileID: 671206827}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: -10}
-  m_LocalScale: {x: 21.296, y: 1, z: 15.206}
+  m_LocalScale: {x: 378.0543, y: 1, z: 188.7253}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
