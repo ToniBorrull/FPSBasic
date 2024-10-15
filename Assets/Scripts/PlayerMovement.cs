@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float horizontal = Input.GetAxis("Mouse X") * Time.deltaTime * speed;
+        float horizontal = Input.GetAxis("Mouse X") * speed;
 
         Vector3 dir = new Vector3(0, horizontal, 0);
 

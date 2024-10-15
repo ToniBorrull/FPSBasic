@@ -1,3 +1,4 @@
+using Palmmedia.ReportGenerator.Core.CodeAnalysis;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,8 +11,16 @@ public class PickupObjects : MonoBehaviour
     float actualDistance;
     public bool objectFront;
     bool objectSelected;
-    
-    
+    public float maxDistance;
+    public float minDistance;
+    public float throwStrong;
+
+    public GameObject followObj;
+
+    private Vector3 lastPosition;
+    private Vector3 currentPosition;
+    private Vector3 objectVelocity;
+
     RaycastHit hit;
     public GameObject selectedObject;
     private Rigidbody selectedRb;
@@ -25,8 +34,8 @@ public class PickupObjects : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Raycast();
         PickupObject();
+        ChangeObjectDistance();
     }
 
     void Raycast()
@@ -47,47 +56,66 @@ public class PickupObjects : MonoBehaviour
     }
     void PickupObject()
     {
+        if (Input.GetButtonDown("Fire1")){
+
+            Raycast();
+        
+        }
         if (objectFront)
         {
             if (Input.GetButton("Fire1"))
             {
+              
                 objectSelected = true;
                 selectedObject = hit.transform.gameObject;
                 selectedRb = selectedObject.GetComponent<Rigidbody>();
-                
-                selectedRb.isKinematic = true;
-                selectedObject.transform.position = transform.position + transform.forward * distance;
 
+                selectedRb.useGravity = false;
+                followObj.transform.position = transform.position + transform.forward * distance;
+                selectedObject.transform.position = Vector3.Lerp(selectedObject.transform.position, followObj.transform.position, 3f * Time.deltaTime) ;
+
+                lastPosition = currentPosition;
+
+                currentPosition = selectedObject.transform.position;
+
+                objectVelocity = (currentPosition - lastPosition) / Time.deltaTime;
+
+                lastPosition = currentPosition;
             }
             if (Input.GetButtonUp("Fire1"))
             {
+                selectedRb.useGravity = true;
+
+                selectedRb.velocity = objectVelocity * throwStrong;
                 
-                selectedRb.isKinematic = false;
                 selectedObject = null;
                 selectedRb = null;
                 objectSelected = false;
+                distance = actualDistance;
             }
         }
         if (!objectFront)
         {
             if (selectedRb != null)
             {
-                selectedRb.isKinematic = false;
+                selectedRb.useGravity = true;
                 selectedObject = null;
                 selectedRb = null;
                 objectSelected = false;
+     
             }
+            distance = actualDistance;
         }
     }
     void ChangeObjectDistance()
     {
-        if (objectSelected)
+        float scroll = Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime;
+       
+        if (scroll != 0f)
         {
-            distance = actualDistance*Input.mouseScrollDelta.y;
+            distance += Input.mouseScrollDelta.y;
+            distance = Mathf.Clamp(distance, minDistance, maxDistance);  
         }
-        else
-        {
-            distance = actualDistance;
-        }
+
     }
 }

@@ -12,6 +12,7 @@ public class GroundRaycast : MonoBehaviour
 
     public float speed = 10f;
     float normalSpeed;
+    Vector3 dir;
 
     public Rigidbody rb;
     void Start()
@@ -24,9 +25,14 @@ public class GroundRaycast : MonoBehaviour
 
     void Update()
     {
-       MovePlayer();
+      
        Jump();
        Raycast();
+    }
+
+    private void FixedUpdate()
+    {
+        MovePlayer();
     }
 
     void Jump()
@@ -59,9 +65,7 @@ public class GroundRaycast : MonoBehaviour
                     speed = normalSpeed * 2;
 
                 }
-                if (Input.GetButtonUp("Fire3")){
-                    speed = normalSpeed;
-                }
+                
             }
 
             if (vertical < 0)
@@ -73,13 +77,19 @@ public class GroundRaycast : MonoBehaviour
                 speed = normalSpeed * 0.75f; 
             }
 
-            float verticalMovement = vertical * Time.deltaTime * speed;
-            float horizontalMovement = horizontal * Time.deltaTime * speed;
+            float verticalMovement = vertical * Time.fixedDeltaTime * speed;
+            float horizontalMovement = horizontal * Time.fixedDeltaTime * speed;
 
-            Vector3 dir = (transform.forward * verticalMovement) + (transform.right * horizontalMovement);
-            transform.localPosition += dir;
+             dir = (transform.forward * verticalMovement) + (transform.right * horizontalMovement);
+            
             
         }
+        if (!grounded)
+        {
+            speed = normalSpeed * 0.5f;
+        }
+        transform.localPosition += dir;
+
     }
     void Raycast()
     {

@@ -9,7 +9,7 @@ public class VerticalCamMovement : MonoBehaviour
 
     void Update()
     {
-        float vertical = Input.GetAxis("Mouse Y") * Time.deltaTime * speed;
+        float vertical = Input.GetAxis("Mouse Y") * speed;
         verticalRotation -= vertical;
         verticalRotation = Mathf.Clamp(verticalRotation, -70f, 70f);
 
