@@ -10,9 +10,15 @@ public class GroundRaycast : MonoBehaviour
     public bool grounded;
     public float jumpForce;
 
+    public float jetpackForce;
+    bool jumping = false;
+
     public float speed = 10f;
     float normalSpeed;
     Vector3 dir;
+
+
+    public bool pressingSpace = false;
 
     public Rigidbody rb;
     void Start()
@@ -26,8 +32,9 @@ public class GroundRaycast : MonoBehaviour
     void Update()
     {
       
-       Jump();
+       Space();
        Raycast();
+       Jump();
     }
 
     private void FixedUpdate()
@@ -35,17 +42,35 @@ public class GroundRaycast : MonoBehaviour
         MovePlayer();
     }
 
+    void Space()
+    {
+        if (Input.GetButton("Jump"))
+        {
+            SpaceDown();
+        }
+        else
+        {
+            SpaceUp();
+        }
+    }
     void Jump()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (pressingSpace)
         {
             if (grounded)
             {
-                rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+                if (!jumping)
+                {
+                    rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+                    jumping = true;
+                }
             }
         }
+        else
+        {
+            jumping = false;
+        }
     }
-
     void MovePlayer()
     {
         if (grounded)
@@ -99,13 +124,24 @@ public class GroundRaycast : MonoBehaviour
         {
             Debug.DrawRay(transform.position, Vector3.down * hit.distance, Color.yellow);
             grounded = true;
-            Debug.Log("Did Hit");
+            
         }
         else
         {
             Debug.DrawRay(transform.position, Vector3.down * distance, Color.red);
             grounded = false;
-            Debug.Log("Not Hit");
+            
         }
     }
+
+    void SpaceDown()
+    {
+            pressingSpace = true;
+    }
+    void SpaceUp()
+    {
+        pressingSpace = false;
+        
+    }
+
 }
