@@ -245,6 +245,8 @@ MonoBehaviour:
   jetpackForce: 1
   speed: 10
   pressingSpace: 0
+  pressedTimes: 0
+  lastTime: -1
   rb: {fileID: 0}
 --- !u!114 &14063404
 MonoBehaviour:

@@ -19,6 +19,8 @@ public class GroundRaycast : MonoBehaviour
 
 
     public bool pressingSpace = false;
+    public int pressedTimes = 0;
+    public int lastTime;
 
     public Rigidbody rb;
     void Start()
@@ -31,7 +33,6 @@ public class GroundRaycast : MonoBehaviour
 
     void Update()
     {
-      
        Space();
        Raycast();
        Jump();
@@ -44,6 +45,7 @@ public class GroundRaycast : MonoBehaviour
 
     void Space()
     {
+        
         if (Input.GetButton("Jump"))
         {
             SpaceDown();
@@ -73,13 +75,10 @@ public class GroundRaycast : MonoBehaviour
     }
     void MovePlayer()
     {
+        float vertical = Input.GetAxis("Vertical");
+        float horizontal = Input.GetAxis("Horizontal");
         if (grounded)
         {
-            float vertical = Input.GetAxis("Vertical");
-            
-
-            float horizontal = Input.GetAxis("Horizontal");
-
             speed = normalSpeed;
 
             if (vertical > 0)
@@ -100,19 +99,16 @@ public class GroundRaycast : MonoBehaviour
             if (horizontal != 0 && vertical == 0)
             {
                 speed = normalSpeed * 0.75f; 
-            }
-
-            float verticalMovement = vertical * Time.fixedDeltaTime * speed;
-            float horizontalMovement = horizontal * Time.fixedDeltaTime * speed;
-
-             dir = (transform.forward * verticalMovement) + (transform.right * horizontalMovement);
-            
-            
+            } 
+            ResetSpace();
         }
         if (!grounded)
         {
             speed = normalSpeed * 0.5f;
         }
+        float verticalMovement = vertical * Time.fixedDeltaTime * speed;
+        float horizontalMovement = horizontal * Time.fixedDeltaTime * speed;
+        dir = (transform.forward * verticalMovement) + (transform.right * horizontalMovement);
         transform.localPosition += dir;
 
     }
@@ -137,11 +133,20 @@ public class GroundRaycast : MonoBehaviour
     void SpaceDown()
     {
             pressingSpace = true;
+            if(pressedTimes == lastTime)
+            {
+                lastTime += 1;
+            }
     }
     void SpaceUp()
     {
         pressingSpace = false;
         
+    }
+
+    public void ResetSpace()
+    {
+        pressedTimes = 0;
     }
 
 }
