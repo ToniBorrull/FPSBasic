@@ -46,11 +46,11 @@ public class GroundRaycast : MonoBehaviour
     void Space()
     {
         
-        if (Input.GetButton("Jump"))
+        if (Input.GetButtonDown("Jump"))
         {
             SpaceDown();
         }
-        else
+        if (Input.GetButtonUp("Jump"))
         {
             SpaceUp();
         }
@@ -133,9 +133,10 @@ public class GroundRaycast : MonoBehaviour
     void SpaceDown()
     {
             pressingSpace = true;
-            if(pressedTimes == lastTime)
+            if(pressedTimes <= lastTime)
             {
-                lastTime += 1;
+                pressedTimes ++;
+                lastTime = pressedTimes;
             }
     }
     void SpaceUp()
@@ -147,6 +148,7 @@ public class GroundRaycast : MonoBehaviour
     public void ResetSpace()
     {
         pressedTimes = 0;
+        lastTime = 1;
     }
 
 }

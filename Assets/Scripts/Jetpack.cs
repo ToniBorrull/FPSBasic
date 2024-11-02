@@ -42,26 +42,19 @@ public class Jetpack : MonoBehaviour
             
             if(raycast.pressingSpace)
             {
-                if (raycast.pressedTimes == 2)
+                if (raycast.pressedTimes >= 1)
                 {
-                    JetpackOn();
+                    jetpackOn = true;
                 }
 
             }
             if (!raycast.pressingSpace)
             {
-                JetpackOff();
+                jetpackOn = false;
             }
         }
     }
-    void JetpackOn()
-    {   
-        jetpackOn = true;
-    }
-    void JetpackOff()
-    {
-        jetpackOn = false;
-    }
+   
     void UsingJetpack()
     {
         if (jetpackOn)

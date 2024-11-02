@@ -246,7 +246,7 @@ MonoBehaviour:
   speed: 10
   pressingSpace: 0
   pressedTimes: 0
-  lastTime: -1
+  lastTime: 1
   rb: {fileID: 0}
 --- !u!114 &14063404
 MonoBehaviour:
@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28272cb219eb0cb4cb6f140191e30ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jetpackForce: 0.1
+  jetpackForce: 0.09
   jetpackFuel: 100
   maxFuel: 2
   fuelCanvas: {fileID: 1950845949}
