@@ -242,11 +242,7 @@ MonoBehaviour:
   distance: 0.2
   grounded: 0
   jumpForce: 5
-  jetpackForce: 1
-  speed: 10
-  pressingSpace: 0
-  pressedTimes: 0
-  lastTime: 1
+  speed: 5
   rb: {fileID: 0}
 --- !u!114 &14063404
 MonoBehaviour:
@@ -810,7 +806,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &933308078
 BoxCollider:
@@ -915,7 +911,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &965180635
 BoxCollider:
@@ -1081,7 +1077,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &1033714533
 BoxCollider:
@@ -1186,7 +1182,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &1154438659
 BoxCollider:
@@ -1630,6 +1626,10 @@ PrefabInstance:
     - target: {fileID: 5404344158695093462, guid: c9adced5e329f0546af2ede8f75165a7, type: 3}
       propertyPath: m_Name
       value: Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404344158695093462, guid: c9adced5e329f0546af2ede8f75165a7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7825932610259584177, guid: c9adced5e329f0546af2ede8f75165a7, type: 3}
       propertyPath: m_RootOrder

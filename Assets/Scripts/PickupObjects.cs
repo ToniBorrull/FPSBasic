@@ -73,14 +73,14 @@ public class PickupObjects : MonoBehaviour
                 selectedRb.useGravity = false;
                 followObj.transform.position = transform.position + transform.forward * distance;
                 selectedObject.transform.position = Vector3.Lerp(selectedObject.transform.position, followObj.transform.position, 3f * Time.deltaTime) ;
-
+                /*
                 lastPosition = currentPosition;
 
                 currentPosition = selectedObject.transform.position;
 
                 objectVelocity = (currentPosition - lastPosition) / Time.deltaTime;
 
-                lastPosition = currentPosition;
+                lastPosition = currentPosition;*/
             }
             if (Input.GetButtonUp("Fire1"))
             {
@@ -94,7 +94,7 @@ public class PickupObjects : MonoBehaviour
                 distance = actualDistance;
             }
         }
-        if (!objectFront)
+       /* if (!objectFront)
         {
             if (selectedRb != null)
             {
@@ -105,7 +105,7 @@ public class PickupObjects : MonoBehaviour
      
             }
             distance = actualDistance;
-        }
+        }*/
     }
     void ChangeObjectDistance()
     {
@@ -113,8 +113,11 @@ public class PickupObjects : MonoBehaviour
        
         if (scroll != 0f)
         {
-            distance += Input.mouseScrollDelta.y;
-            distance = Mathf.Clamp(distance, minDistance, maxDistance);  
+            if (objectSelected)
+            {
+                distance += Input.mouseScrollDelta.y;
+                distance = Mathf.Clamp(distance, minDistance, maxDistance);
+            }
         }
 
     }

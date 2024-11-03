@@ -9,18 +9,11 @@ public class GroundRaycast : MonoBehaviour
     public float distance;
     public bool grounded;
     public float jumpForce;
-
-    public float jetpackForce;
     bool jumping = false;
 
-    public float speed = 10f;
+    public float speed;
     float normalSpeed;
     Vector3 dir;
-
-
-    public bool pressingSpace = false;
-    public int pressedTimes = 0;
-    public int lastTime;
 
     public Rigidbody rb;
     void Start()
@@ -30,10 +23,8 @@ public class GroundRaycast : MonoBehaviour
     }
 
 
-
     void Update()
     {
-       Space();
        Raycast();
        Jump();
     }
@@ -43,21 +34,9 @@ public class GroundRaycast : MonoBehaviour
         MovePlayer();
     }
 
-    void Space()
-    {
-        
-        if (Input.GetButtonDown("Jump"))
-        {
-            SpaceDown();
-        }
-        if (Input.GetButtonUp("Jump"))
-        {
-            SpaceUp();
-        }
-    }
     void Jump()
     {
-        if (pressingSpace)
+        if (Input.GetButtonDown("Jump"))
         {
             if (grounded)
             {
@@ -100,17 +79,18 @@ public class GroundRaycast : MonoBehaviour
             {
                 speed = normalSpeed * 0.75f; 
             } 
-            ResetSpace();
         }
         if (!grounded)
         {
             speed = normalSpeed * 0.5f;
         }
-        float verticalMovement = vertical * Time.fixedDeltaTime * speed;
-        float horizontalMovement = horizontal * Time.fixedDeltaTime * speed;
-        dir = (transform.forward * verticalMovement) + (transform.right * horizontalMovement);
-        transform.localPosition += dir;
+        dir = (transform.forward * vertical) + (transform.right * horizontal);
 
+        if (dir.magnitude >= 1)
+        {
+            dir.Normalize();
+        }
+        transform.localPosition += dir * Time.fixedDeltaTime * speed;
     }
     void Raycast()
     {
@@ -130,25 +110,6 @@ public class GroundRaycast : MonoBehaviour
         }
     }
 
-    void SpaceDown()
-    {
-            pressingSpace = true;
-            if(pressedTimes <= lastTime)
-            {
-                pressedTimes ++;
-                lastTime = pressedTimes;
-            }
-    }
-    void SpaceUp()
-    {
-        pressingSpace = false;
-        
-    }
-
-    public void ResetSpace()
-    {
-        pressedTimes = 0;
-        lastTime = 1;
-    }
+ 
 
 }

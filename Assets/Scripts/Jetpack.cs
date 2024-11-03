@@ -39,22 +39,17 @@ public class Jetpack : MonoBehaviour
     {
         if (!raycast.grounded)
         {
-            
-            if(raycast.pressingSpace)
+            if (Input.GetButtonDown("Jump"))
             {
-                if (raycast.pressedTimes >= 1)
-                {
-                    jetpackOn = true;
-                }
-
+                jetpackOn = true;
             }
-            if (!raycast.pressingSpace)
+
+            if(Input.GetButtonUp("Jump"))
             {
                 jetpackOn = false;
             }
         }
     }
-   
     void UsingJetpack()
     {
         if (jetpackOn)
@@ -63,6 +58,11 @@ public class Jetpack : MonoBehaviour
             {
                 rb.AddForce(rb.transform.up * jetpackForce, ForceMode.Impulse);
                 jetpackFuel -= Time.deltaTime;  
+            }
+            if (jetpackFuel <= 0)
+            {
+                jetpackFuel = 0;
+                jetpackOn = false;
             }
         }
     }
@@ -75,11 +75,17 @@ public class Jetpack : MonoBehaviour
                 if (jetpackFuel < maxFuel)
                 {
                     jetpackFuel += Time.deltaTime;
+                   
+                    if(jetpackFuel >= maxFuel)
+                    {
+                        jetpackFuel = maxFuel;
+                    }
                 }
             }
             if(jetpackFuel <= 0)
             {
                 timer += Time.deltaTime;
+               
                 if(timer > 0.5f)
                 {
                     if (jetpackFuel < maxFuel)
