@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HorizontalCamMovement : MonoBehaviour
 {
+    [Header("Senibilidad X")]
     public float speed;
     void Start()
     {

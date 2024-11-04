@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class VerticalCamMovement : MonoBehaviour
 {
+    [Header("Senibilidad Y")]
     public float speed;
     float verticalRotation = 0f;
 
@@ -13,6 +14,6 @@ public class VerticalCamMovement : MonoBehaviour
         verticalRotation -= vertical;
         verticalRotation = Mathf.Clamp(verticalRotation, -70f, 70f);
 
-        transform.localEulerAngles = new Vector3(verticalRotation, transform.localEulerAngles.y, 0); ;
+        transform.localEulerAngles = new Vector3(verticalRotation, transform.localEulerAngles.y, 0); 
     }
 }

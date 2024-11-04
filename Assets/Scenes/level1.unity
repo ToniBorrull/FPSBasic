@@ -256,9 +256,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28272cb219eb0cb4cb6f140191e30ce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jetpackForce: 0.09
-  jetpackFuel: 100
-  maxFuel: 2
+  jetpackForce: 1200
+  maxFuel: 10
+  fuelConsumption: 1
   fuelCanvas: {fileID: 1950845949}
   fuelCanvas2: {fileID: 1771407478}
 --- !u!1 &18903225
@@ -384,11 +384,10 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 128
-  speed: 10
   distance: 5
   objectFront: 0
   maxDistance: 10
-  minDistance: 1
+  minDistance: 2
   throwStrong: 1
   followObj: {fileID: 1753914509}
   selectedObject: {fileID: 0}

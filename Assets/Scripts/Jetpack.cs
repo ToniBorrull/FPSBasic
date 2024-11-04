@@ -9,8 +9,10 @@ public class Jetpack : MonoBehaviour
     Rigidbody rb;
     public float jetpackForce;
     bool jetpackOn = false;
-    public float jetpackFuel;
+    float jetpackFuel;
     public float maxFuel;
+    public float fuelConsumption;
+    float rechargeJetpack;
     public Image fuelCanvas;
     public Image fuelCanvas2;
 
@@ -21,6 +23,9 @@ public class Jetpack : MonoBehaviour
         jetpackFuel = maxFuel;
         raycast = GetComponent<GroundRaycast>();
         rb = GetComponent<Rigidbody>();
+
+        //Hago que siempre tarde 0.5 en recargar sin importar cuanto fuel tenga de max
+        rechargeJetpack = maxFuel / 0.5f;
     }
 
     // Update is called once per frame
@@ -56,8 +61,8 @@ public class Jetpack : MonoBehaviour
         {
             if (jetpackFuel > 0)
             {
-                rb.AddForce(rb.transform.up * jetpackForce, ForceMode.Impulse);
-                jetpackFuel -= Time.deltaTime;  
+                rb.AddForce(rb.transform.up * jetpackForce * Time.deltaTime, ForceMode.Force);
+                jetpackFuel -= fuelConsumption * Time.fixedDeltaTime;  
             }
             if (jetpackFuel <= 0)
             {
@@ -74,8 +79,8 @@ public class Jetpack : MonoBehaviour
             {
                 if (jetpackFuel < maxFuel)
                 {
-                    jetpackFuel += Time.deltaTime;
-                   
+                    jetpackFuel += rechargeJetpack * Time.deltaTime;
+                    
                     if(jetpackFuel >= maxFuel)
                     {
                         jetpackFuel = maxFuel;
@@ -90,7 +95,7 @@ public class Jetpack : MonoBehaviour
                 {
                     if (jetpackFuel < maxFuel)
                     {
-                        jetpackFuel += Time.deltaTime;
+                        jetpackFuel += rechargeJetpack * Time.deltaTime;
                         timer = 0;
                     }
                 }

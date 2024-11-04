@@ -1,4 +1,3 @@
-using Palmmedia.ReportGenerator.Core.CodeAnalysis;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +5,6 @@ using UnityEngine;
 public class PickupObjects : MonoBehaviour
 {
     public LayerMask layerMask;
-    public float speed = 10f;
     public float distance;
     float actualDistance;
     public bool objectFront;
@@ -72,15 +70,16 @@ public class PickupObjects : MonoBehaviour
 
                 selectedRb.useGravity = false;
                 followObj.transform.position = transform.position + transform.forward * distance;
-                selectedObject.transform.position = Vector3.Lerp(selectedObject.transform.position, followObj.transform.position, 3f * Time.deltaTime) ;
-                /*
+                selectedObject.transform.position = Vector3.Lerp(selectedObject.transform.position, followObj.transform.position, 3f * Time.deltaTime);
+                
+                //Calcular velocidad objetos
                 lastPosition = currentPosition;
 
                 currentPosition = selectedObject.transform.position;
 
                 objectVelocity = (currentPosition - lastPosition) / Time.deltaTime;
 
-                lastPosition = currentPosition;*/
+                lastPosition = currentPosition;
             }
             if (Input.GetButtonUp("Fire1"))
             {

@@ -16,6 +16,7 @@ public class GroundRaycast : MonoBehaviour
     Vector3 dir;
 
     public Rigidbody rb;
+   
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -58,7 +59,6 @@ public class GroundRaycast : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         if (grounded)
         {
-            speed = normalSpeed;
 
             if (vertical > 0)
             {
@@ -79,17 +79,21 @@ public class GroundRaycast : MonoBehaviour
             {
                 speed = normalSpeed * 0.75f; 
             } 
+            
         }
+        
         if (!grounded)
         {
             speed = normalSpeed * 0.5f;
         }
+         
         dir = (transform.forward * vertical) + (transform.right * horizontal);
 
         if (dir.magnitude >= 1)
         {
             dir.Normalize();
         }
+       
         transform.localPosition += dir * Time.fixedDeltaTime * speed;
     }
     void Raycast()
